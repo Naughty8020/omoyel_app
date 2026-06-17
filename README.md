@@ -1,6 +1,6 @@
 # 💇‍♀️ 美容師　就活マッチングサイト Mobile　WEBアプリ
 
-[美容師就活マッチングサイトのホームページを開く(Mobile First)🌐](https://omoyel-fl1c2kim9-yusuketamuras-projects.vercel.app/)
+[美容師就活マッチングサイトのホームページを開く(Mobile First)🌐](https://omoyel-app.vercel.app)
 
 ---
 ## ✨ 主な機能
