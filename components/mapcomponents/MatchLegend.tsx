@@ -11,7 +11,7 @@ export function MatchLegend() {
         .join(", ");
 
     return (
-        <div className={`absolute left-3 top-40 z-20 rounded-2xl bg-white/95 text-xs text-gray-900 shadow-md transition-[width,padding] duration-300 ease-out ${isExpanded ? "w-[calc(100%-1.5rem)] px-3 py-2.5" : "w-32 px-3 py-2"} sm:w-auto sm:px-3 sm:py-3`} aria-label="ピンの色の説明">
+        <div className={`absolute left-3 top-40 z-20 rounded-2xl bg-white/95 text-xs text-gray-900 shadow-md transition-[width,padding] duration-300 ease-out ${isExpanded ? "w-[calc(100%-1.5rem)] px-3 py-2.5" : "w-36 px-3 py-2"} sm:w-auto sm:px-3 sm:py-3`} aria-label="ピンの色の説明">
             <div className="sm:hidden">
                 <button
                     type="button"
@@ -19,7 +19,7 @@ export function MatchLegend() {
                     className="flex w-full items-center justify-between gap-2 font-bold"
                     aria-expanded={isExpanded}
                 >
-                    <span>{isExpanded ? "マッチ度" : "マッチ度を見る"}</span>
+                    <span className="whitespace-nowrap">{isExpanded ? "マッチ度" : "マッチ度を見る"}</span>
                     <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
                 </button>
 
