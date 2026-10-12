@@ -15,17 +15,31 @@ type RootLayoutProps = {
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
+  const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const canLoadGoogleMaps = Boolean(
+    googleMapsApiKey && !googleMapsApiKey.includes('YOUR_GOOGLE_MAPS_API_KEY')
+  );
+
   return (
     <html lang="ja">
       <body className={inter.className}>
-        {/* Google Maps API を全ページで一度だけ読み込む */}
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&language=ja&libraries=geometry`}
-          strategy="beforeInteractive"
-        />
+        {canLoadGoogleMaps && (
+          <>
+            {/* API認証失敗をGoogle Mapsの読み込み前に記録し、マップ画面へ通知する */}
+            <Script id="google-maps-auth-handler" strategy="beforeInteractive">
+              {`window.gm_authFailure = function () {
+                window.__googleMapsAuthFailed = true;
+                window.dispatchEvent(new Event("google-maps-auth-failure"));
+              };`}
+            </Script>
+            <Script
+              src={`https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&language=ja&libraries=geometry`}
+              strategy="beforeInteractive"
+            />
+          </>
+        )}
         {children}
       </body>
     </html>
   );
 }
-

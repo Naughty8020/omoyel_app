@@ -6,7 +6,11 @@ import { createClient } from '@/lib/supabase_client';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
-export const Header = () => {
+type HeaderProps = {
+    compact?: boolean;
+};
+
+export const Header = ({ compact = false }: HeaderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState<{ id: string } | null>(null);
     const [supabase] = useState(createClient);
@@ -33,18 +37,18 @@ export const Header = () => {
     const pathname = usePathname();
     
     return (
-        <header className="py-6 px-6 bg-white border-b border-gray-100 relative w-full">
+        <header className={`${compact ? 'h-14 px-4 sm:h-auto sm:px-6 sm:py-6' : 'px-6 py-6'} bg-white border-b border-gray-100 relative w-full`}>
             {/* 全体を包含するコンテナ：flexで左右の端を確保 */}
-            <div className="flex items-center justify-between w-full">
+            <div className="flex h-full items-center justify-between w-full">
                 
                 {/* 1. 左端：ロゴのずれを防ぐためのダミー（または戻るボタン用） */}
                 <div className="w-10"></div>
 
                 {/* 2. 中央：常に画面の真ん中に配置 */}
                 <Link href="/" className="absolute left-1/2 -translate-x-1/2 text-center">
-                    <h1 className="text-3xl font-bold flex flex-col sm:flex-row items-center justify-center">
+                    <h1 className={`${compact ? 'text-xl sm:text-3xl' : 'text-3xl'} font-bold flex flex-col sm:flex-row items-center justify-center`}>
                         <span className="text-indigo-400">OMOYEL</span>
-                        <span className="text-indigo-300 text-xl sm:ml-2 whitespace-nowrap">サロン見学予約</span>
+                        <span className={`${compact ? 'hidden sm:inline' : ''} text-indigo-300 text-xl sm:ml-2 whitespace-nowrap`}>サロン見学予約</span>
                     </h1>
                 </Link>
 
