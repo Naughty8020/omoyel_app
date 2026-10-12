@@ -171,6 +171,19 @@ export default function Home() {
     setRatingFilters([]);
   };
 
+  const changeViewMode = (mode: 'list' | 'map') => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    setViewMode(mode);
+    if (mode === 'map') {
+      setTimeout(() => {
+        childRef.current?.initMapFromParent();
+      }, 0);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-purple-50 to-indigo-100">
       <Header />
@@ -203,7 +216,7 @@ export default function Home() {
           {/* 表示形式選択部 */}
           <div className="grid grid-cols-2 gap-3">
             <button
-              onClick={() => setViewMode('list')}
+              onClick={() => changeViewMode('list')}
               className={`py-3 rounded-lg font-medium transition ${viewMode === 'list'
                 ? 'bg-white text-gray-900 shadow-md border-2 border-indigo-400'
                 : 'bg-white text-gray-600 shadow-sm border border-gray-200'
@@ -216,12 +229,7 @@ export default function Home() {
             </button>
 
             <button
-              onClick={() => {
-                setViewMode('map');
-                setTimeout(() => {
-                  childRef.current?.initMapFromParent();
-                }, 0);
-              }}
+              onClick={() => changeViewMode('map')}
               className={`py-3 rounded-lg font-medium transition ${viewMode === 'map'
                 ? 'bg-white text-gray-900 shadow-md border-2 border-indigo-400'
                 : 'bg-white text-gray-600 shadow-sm border border-gray-200'
