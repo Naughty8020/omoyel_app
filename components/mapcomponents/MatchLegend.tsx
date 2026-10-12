@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { MATCH_COLORS, MATCH_GRADIENT_STOPS } from "@/lib/match_colors";
 
 export function MatchLegend() {
@@ -11,7 +11,7 @@ export function MatchLegend() {
         .join(", ");
 
     return (
-        <div className={`absolute left-3 top-40 z-20 rounded-2xl bg-white/95 text-xs text-gray-900 shadow-md ${isExpanded ? "right-3 px-3 py-2.5" : "px-3 py-2"} sm:right-auto sm:px-3 sm:py-3`} aria-label="ピンの色の説明">
+        <div className={`absolute left-3 top-40 z-20 rounded-2xl bg-white/95 text-xs text-gray-900 shadow-md transition-[width,padding] duration-300 ease-out ${isExpanded ? "w-[calc(100%-1.5rem)] px-3 py-2.5" : "w-32 px-3 py-2"} sm:w-auto sm:px-3 sm:py-3`} aria-label="ピンの色の説明">
             <div className="sm:hidden">
                 <button
                     type="button"
@@ -20,11 +20,14 @@ export function MatchLegend() {
                     aria-expanded={isExpanded}
                 >
                     <span>{isExpanded ? "マッチ度" : "マッチ度を見る"}</span>
-                    {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
                 </button>
 
-                {isExpanded && (
-                    <div className="mt-2">
+                <div
+                    aria-hidden={!isExpanded}
+                    className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-out ${isExpanded ? "mt-2 grid-rows-[1fr] opacity-100" : "mt-0 grid-rows-[0fr] opacity-0"}`}
+                >
+                    <div className="overflow-hidden">
                         <div className="flex items-center gap-2">
                             <span className="shrink-0 text-[10px] font-medium text-gray-600">低い</span>
                             <span className="h-2.5 min-w-0 flex-1 rounded-full" style={{ background: `linear-gradient(to right, ${gradient})` }} />
@@ -37,7 +40,7 @@ export function MatchLegend() {
                             </div>
                         </div>
                     </div>
-                )}
+                </div>
             </div>
 
             <div className="hidden sm:block">
