@@ -195,6 +195,7 @@ export default function Home() {
             <SearchBar
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
+              isMapView={viewMode === 'map'}
             />
             <button
               onClick={() => setShowFilterModal(true)}
