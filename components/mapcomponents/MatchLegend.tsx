@@ -14,14 +14,10 @@ export function MatchLegend() {
                     <span className="h-2.5 min-w-0 flex-1 rounded-full" style={{ background: `linear-gradient(to right, ${gradient})` }} />
                     <span className="shrink-0 text-[10px] font-medium text-gray-600">高い</span>
                 </div>
-                <div className="mt-2 flex items-center gap-4 border-t border-gray-200 pt-2">
+                <div className="mt-2 flex items-center border-t border-gray-200 pt-2">
                     <div className="flex items-center gap-1.5">
                         <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MATCH_COLORS.favorite }} />
                         <span className="font-medium">お気に入り</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                        <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MATCH_COLORS.default }} />
-                        <span className="font-medium">通常表示</span>
                     </div>
                 </div>
             </div>
@@ -39,10 +35,6 @@ export function MatchLegend() {
                 <div className="mt-2 flex items-center gap-2 border-t border-gray-200 pt-2">
                     <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MATCH_COLORS.favorite }} />
                     <span className="font-medium">お気に入り</span>
-                </div>
-                <div className="mt-1 flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MATCH_COLORS.default }} />
-                    <span className="font-medium">通常表示</span>
                 </div>
             </div>
         </div>
