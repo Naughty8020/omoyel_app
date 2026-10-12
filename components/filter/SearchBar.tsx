@@ -14,7 +14,7 @@ export default function SearchBar({ searchQuery, setSearchQuery }: Props){
                 placeholder="店舗名で検索"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white rounded-lg pl-12 pr-4 py-3 text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 border border-gray-200"
+                className="w-full bg-white rounded-lg pl-12 pr-4 py-3 text-gray-700 placeholder-gray-400 shadow-sm border border-gray-200 focus:border-indigo-400 focus:outline-none focus:ring-0"
             />
         </div>
     );
