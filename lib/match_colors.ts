@@ -1,14 +1,12 @@
 export const MATCH_COLORS = {
-    favorite: "#FACC15",
+    favorite: "#38BDF8",
     default: "#EA4335",
 } as const;
 
 export const MATCH_GRADIENT_STOPS = [
-    { score: 0, color: "#38BDF8" },
-    { score: 25, color: "#22D3EE" },
-    { score: 50, color: "#22C55E" },
-    { score: 75, color: "#F97316" },
-    { score: 100, color: "#C026D3" },
+    { score: 0, color: "#22C55E" },
+    { score: 50, color: "#FACC15" },
+    { score: 100, color: "#EF4444" },
 ] as const;
 
 function hexToRgb(color: string) {
@@ -24,9 +22,9 @@ function toHex(value: number) {
 }
 
 export function getMatchColor(score: number): string {
-    if (!Number.isFinite(score) || score <= 0) return MATCH_COLORS.default;
+    if (!Number.isFinite(score)) return MATCH_COLORS.default;
 
-    const normalizedScore = Math.min(100, score);
+    const normalizedScore = Math.max(0, Math.min(100, score));
     const upperIndex = MATCH_GRADIENT_STOPS.findIndex(stop => normalizedScore <= stop.score);
     const safeUpperIndex = upperIndex === -1 ? MATCH_GRADIENT_STOPS.length - 1 : upperIndex;
     const upper = MATCH_GRADIENT_STOPS[safeUpperIndex];
@@ -49,4 +47,3 @@ export function getMarkerIcon(color: string): google.maps.Symbol {
         scale: 1,
     };
 }
-
