@@ -77,13 +77,14 @@ const Mapmain = forwardRef<ChildHandle, { salons: Salon[] }>(({ salons }, ref) =
   // Google Maps API キーの有無によってモックマップにフォールバックする
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Google Maps の認証エラー (InvalidKeyMapError 等) を検知してモックに切り替える
-      (window as Window & { gm_authFailure?: () => void }).gm_authFailure = () => {
+      const authAwareWindow = window as Window & { __googleMapsAuthFailed?: boolean };
+      const handleGoogleMapsAuthFailure = () => {
         setUseMockMap(true);
       };
+      window.addEventListener("google-maps-auth-failure", handleGoogleMapsAuthFailure);
 
       const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-      if (!apiKey || apiKey.includes("YOUR_GOOGLE_MAPS_API_KEY")) {
+      if (authAwareWindow.__googleMapsAuthFailed || !apiKey || apiKey.includes("YOUR_GOOGLE_MAPS_API_KEY")) {
         setUseMockMap(true);
       } else {
         // 2秒待ってgoogleオブジェクトがロードされなければモックを表示
@@ -94,8 +95,13 @@ const Mapmain = forwardRef<ChildHandle, { salons: Salon[] }>(({ salons }, ref) =
             setIsScriptLoaded(true);
           }
         }, 2000);
-        return () => clearTimeout(timer);
+        return () => {
+          clearTimeout(timer);
+          window.removeEventListener("google-maps-auth-failure", handleGoogleMapsAuthFailure);
+        };
       }
+
+      return () => window.removeEventListener("google-maps-auth-failure", handleGoogleMapsAuthFailure);
     }
   }, []);
 
@@ -110,6 +116,7 @@ const Mapmain = forwardRef<ChildHandle, { salons: Salon[] }>(({ salons }, ref) =
       zoom: 13,
       center: { lat: 35.668, lng: 139.73 }, // 東京エリアを中心に
       mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
     });
 
     setMap(mapInstance);
