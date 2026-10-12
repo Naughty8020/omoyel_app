@@ -116,6 +116,7 @@ const Mapmain = forwardRef<ChildHandle, { salons: Salon[] }>(({ salons }, ref) =
       zoom: 13,
       center: { lat: 35.668, lng: 139.73 }, // 東京エリアを中心に
       mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
     });
 
     setMap(mapInstance);
