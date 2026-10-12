@@ -13,7 +13,7 @@ import { getSalonDataWithRatings } from '@/lib/supabase_client';
 
 import { Salon } from '@/types/salon';
 
-import { Filter, List, MapPin as MapIcon } from 'lucide-react';
+import { Filter, List, MapPin as MapIcon, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
 // 型定義を追加
@@ -186,7 +186,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-purple-50 to-indigo-100">
-      <Header />
+      <Header compact={viewMode === 'map'} />
 
       {/* 検索バー、フィルターボタン部 */}
       <div className="sticky top-0 z-40 pb-4">
@@ -263,7 +263,7 @@ export default function Home() {
             </div>
           )
         ) : (
-          <div className="mt-[-145px] h-[calc(100vh-85px)]">
+          <div className="mt-[-145px] h-[calc(100dvh-3.5rem)] sm:h-[calc(100vh-85px)]">
             <Mapmain salons={filteredSalons} ref={childRef} />
           </div>
         )}
@@ -289,9 +289,18 @@ export default function Home() {
 
       {/* 相談ボタン部 */}
       {!showFilterModal && (
-        <Link href="/ai" className="fixed bottom-6 right-6 bg-indigo-400 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-500 transition flex items-center gap-2 text-sm font-medium z-50">
-          マッチするサロンをAIに相談
-          <span className="text-xs">💬</span>
+        <Link
+          href="/ai"
+          aria-label="マッチするサロンをAIに相談"
+          title="マッチするサロンをAIに相談"
+          className={`fixed bottom-6 right-6 z-50 flex items-center justify-center rounded-full bg-indigo-400 text-white shadow-lg transition hover:bg-indigo-500 ${
+            viewMode === 'map'
+              ? 'h-12 w-12 p-0 sm:h-auto sm:w-auto sm:gap-2 sm:px-6 sm:py-3'
+              : 'gap-2 px-6 py-3 text-sm font-medium'
+          }`}
+        >
+          <span className={viewMode === 'map' ? 'hidden sm:inline' : ''}>マッチするサロンをAIに相談</span>
+          <MessageCircle className="h-5 w-5" aria-hidden="true" />
         </Link>
       )}
     </div>
